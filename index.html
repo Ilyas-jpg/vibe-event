@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Vibe Event · Kırıkkale'de müzik, dans ve iyi enerji</title>
 <meta name="description" content="Vibe Event, Kırıkkale'de alkolsüz ve enerjisi yüksek elektronik müzik geceleri düzenler. Open Your Eyes serisinin 22 Eylül 2026 durağında DJ TINA Terapi Cafe sahnesinde. Biletin QR kodlu olarak e-postana gelir.">
-<meta name="theme-color" content="#0B0713">
+<meta name="theme-color" content="#040207">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
 <link rel="icon" type="image/png" sizes="512x512" href="assets/img/favicon-512.png">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
@@ -18,8 +18,8 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="preload" href="assets/fonts/syne-tr.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/manrope-tr.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/panchang-700-tr.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/jetbrains-mono-tr.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/site.css">
 <script type="application/ld+json">
 {
@@ -44,224 +44,175 @@
 }
 </script>
 </head>
-<body>
+<body class="kilit">
 
-<header class="ust">
-  <div class="kap-genis ust-ic">
-    <a class="marka" href="index.html" aria-label="Vibe Event ana sayfa">
-      <img src="assets/img/vibe-logo-160.webp" width="44" height="44" alt="Vibe Event">
-    </a>
-    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menüyü aç">
-      <svg class="ikon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-    </button>
+<div class="yukleme" id="yukleme" aria-hidden="true">
+  <img class="yukleme-goz" src="assets/brand/vibe-logo-goz-512.png" width="512" height="294" alt="">
+  <div class="yukleme-sayac"><span id="sayac">00</span></div>
+  <div class="yukleme-not">Vibe Event · Kırıkkale</div>
+</div>
+
+<header class="ust" id="ust">
+  <a class="marka" href="index.html" aria-label="Vibe Event ana sayfa">
+    <img src="assets/brand/vibe-logo-lockup-800.png" width="800" height="690" alt="Vibe Event">
+  </a>
+  <p class="ust-orta">Kırıkkale'de alkolsüz<br>elektronik müzik geceleri</p>
+  <div class="ust-sag">
     <nav class="nav" id="nav" aria-label="Site menüsü">
       <a href="#etkinlik">Etkinlik</a>
       <a href="#biletler">Biletler</a>
-      <a href="#nasil">Nasıl alınır</a>
-      <a href="#hakkinda">Hakkında</a>
-      <a href="#kurallar">Kurallar</a>
       <a href="#iletisim">İletişim</a>
-      <a class="btn btn-birincil btn-kucuk" href="bilet.html">Bilet al</a>
+      <button class="nav-kapat" type="button" id="navKapat">Kapat</button>
     </nav>
+    <a class="cta" href="bilet.html">
+      <span class="cta-etiket">Bilet al</span>
+      <span class="cta-ikon" aria-hidden="true"><svg class="ikon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+    <button class="menu-btn" type="button" id="menuBtn" aria-expanded="false" aria-controls="nav">Menü</button>
   </div>
 </header>
 
 <main>
 
-  <section class="hero">
-    <div class="kap-genis hero-ic">
+  <section class="hero" id="hero">
+    <div class="hero-sabit">
+      <canvas id="hero-canvas" aria-hidden="true"></canvas>
+      <img class="hero-yedek" src="assets/img/hero-fallback.jpg" alt="" aria-hidden="true">
+      <div class="hero-ic">
+        <p class="hero-not">Open Your Eyes serisi<br>22 Eylül 2026 · Kırıkkale</p>
+        <div class="madalyon" aria-hidden="true">
+          <svg viewBox="0 0 320 320">
+            <defs>
+              <path id="halkaDis1" d="M160,160 m-140,0 a140,140 0 1,1 280,0 a140,140 0 1,1 -280,0"/>
+              <path id="halkaIc1" d="M160,160 m-108,0 a108,108 0 1,1 216,0 a108,108 0 1,1 -216,0"/>
+            </defs>
+            <image href="assets/brand/vibe-logo-goz-512.png" x="76" y="112" width="168" height="97"/>
+            <g class="halka halka-dis"><text><textPath href="#halkaDis1" textLength="879" lengthAdjust="spacing">Vibe Event • Open Your Eyes • Vibe Event • Open Your Eyes • </textPath></text></g>
+            <g class="halka halka-ic"><text><textPath href="#halkaIc1" textLength="678" lengthAdjust="spacing">22 Eylül 2026 • Terapi Cafe • Kırıkkale • 22 Eylül • </textPath></text></g>
+          </svg>
+        </div>
+        <div class="hero-alt-blok">
+          <div class="hud">
+            <div><span>Tarih</span>22.09.2026 Salı</div>
+            <div><span>Mekân</span>Terapi Cafe, Kırıkkale</div>
+            <div><span>Kapılar</span>19:00 · Sahne 19:30</div>
+            <div><span>Bilet</span>380₺'den · Erken dönem</div>
+          </div>
+          <h1 class="hero-baslik">
+            <span class="satir" style="--d:.05s"><span>Hazır ol,</span></span>
+            <span class="satir" style="--d:.15s"><span>gözlerin</span></span>
+          </h1>
+          <div class="hero-son">
+            <img src="assets/brand/vibe-logo-goz-512.png" width="512" height="294" alt="">
+            <span class="cizgi" aria-hidden="true"></span>
+            <span class="satir hero-baslik" style="--d:.28s"><span>açılsın.</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blok" id="etkinlik">
+    <div class="blok-ic">
+      <h2 class="dev rv">DJ TINA</h2>
+      <div class="dev-alt rv" style="--d:.1s">
+        <div class="seri">Open Your Eyes</div>
+        <div class="etiket">Serinin 22 Eylül durağı<br>Terapi Cafe · Kırıkkale</div>
+      </div>
+      <div class="etkinlik-grid">
+        <div class="afis rv" id="afis" style="--d:.15s">
+          <picture>
+            <source srcset="assets/img/dj-tina-open-your-eyes.webp" type="image/webp">
+            <img src="assets/img/dj-tina-open-your-eyes.jpg" width="1080" height="787" alt="DJ TINA – Open Your Eyes etkinlik afişi: 22 Eylül 2026, Terapi Cafe, Kırıkkale" loading="lazy">
+          </picture>
+        </div>
+        <div class="rv" style="--d:.25s">
+          <p class="kunye-giris">Elektronik müziğin enerjisi DJ TINA'nın performansıyla 22 Eylül'de Terapi Cafe sahnesinde. Kapılar 19:00'da açılıyor, set 19:30'da başlıyor ve gece 22:30'a kadar sürüyor. Etkinlik tamamen alkolsüz; alanda yeme-içme stantları var.</p>
+          <div class="kunye">
+            <div><span>Tarih</span>22 Eylül 2026, Salı</div>
+            <div><span>Saat</span>Kapı 19:00 · Sahne 19:30–22:30</div>
+            <div><span>Mekân</span>Terapi Cafe, Kırıkkale</div>
+            <div><span>Giriş</span>QR kodlu bilet · kimlik veya öğrenci kimliği kontrolü yapılabilir</div>
+            <div><span>Format</span>Alkolsüz etkinlik</div>
+          </div>
+          <div class="kunye-cta">
+            <a class="cta cta-buyuk" href="bilet.html">
+              <span class="cta-etiket">Biletini al</span>
+              <span class="cta-ikon" aria-hidden="true"><svg class="ikon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blok" id="biletler">
+    <div class="blok-ic">
+      <div class="bilet-bas rv">
+        <h2 class="bolum-baslik">Erken dönem<br>biletler</h2>
+        <p class="etiket">Fiyat bilet sayısına göre değişiyor; arkadaşlarınla geldikçe kişi başı düşüyor. Ödeme IBAN ile, biletin QR kodlu olarak e-postana geliyor.</p>
+      </div>
+      <div class="fiyat-liste rv" style="--d:.1s">
+        <a class="fiyat-satir" href="bilet.html">
+          <span class="ad">Tek Tabanca</span>
+          <span class="meta">1 kişi · kişi başı 380₺</span>
+          <span class="tutar">380₺</span>
+        </a>
+        <a class="fiyat-satir" href="bilet.html">
+          <span class="ad">Ayrılmaz İkili</span>
+          <span class="meta">2 kişi · kişi başı 350₺</span>
+          <span class="tutar">700₺</span>
+        </a>
+        <a class="fiyat-satir" href="bilet.html">
+          <span class="ad">Üçlü Kampanya</span>
+          <span class="meta">3 kişi · kişi başı 333₺ · en avantajlı</span>
+          <span class="tutar">1.000₺</span>
+        </a>
+      </div>
+      <div class="bilet-alt rv" style="--d:.15s">
+        <p class="etiket">IBAN'a gönder, dekontunu yükle, onaylanınca QR kodlu biletin e-postana gelsin.</p>
+        <a class="cta cta-buyuk" href="bilet.html">
+          <span class="cta-etiket">Bilet al</span>
+          <span class="cta-ikon" aria-hidden="true"><svg class="ikon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="blok marquee-blok" id="kurallar">
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-ic" id="marquee">
+        <span>Open Your Eyes <i>•</i> 22 Eylül <i>•</i> Terapi Cafe <i>•</i> Alkolsüz <i>•</i> </span>
+        <span>Open Your Eyes <i>•</i> 22 Eylül <i>•</i> Terapi Cafe <i>•</i> Alkolsüz <i>•</i> </span>
+        <span>Open Your Eyes <i>•</i> 22 Eylül <i>•</i> Terapi Cafe <i>•</i> Alkolsüz <i>•</i> </span>
+        <span>Open Your Eyes <i>•</i> 22 Eylül <i>•</i> Terapi Cafe <i>•</i> Alkolsüz <i>•</i> </span>
+      </div>
+    </div>
+    <div class="kural-ozet">
+      <div class="rv"><b>Giriş</b>Kapı açılış saatinde alanda ol. Girişte kimlik veya öğrenci kimliği kontrolü yapılabilir; kimliğini yanında bulundur.</div>
+      <div class="rv" style="--d:.1s"><b>Alan</b>Kesici, yanıcı, sivri nesneler ve açık paket sigara alana alınmaz. Dışarıdan yiyecek-içecek yok; stantlar içeride.</div>
+      <div class="rv" style="--d:.2s"><b>Alkol</b>Etkinlik tamamen alkolsüz. Alanda satış yok, dışarıdan alkollü içecek sokulması kesinlikle yasak.<br><a class="baglanti" href="bilet.html#kurallar">Tüm kurallar <svg class="ikon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+    </div>
+  </section>
+
+  <section class="blok" id="iletisim">
+    <div class="blok-ic iletisim-grid">
       <div>
-        <h1 class="gorun">Hazır ol, gözlerin açılsın.</h1>
-        <p class="giris gorun" style="--d:.08s">Vibe Event, Kırıkkale'de müziği, dansı ve iyi enerjiyi aynı gecede buluşturuyor. Open Your Eyes serisinin 22 Eylül durağında sahne DJ TINA'nın: elektronik müzik, dans pisti ve aklında kalacak bir gece.</p>
-        <div class="cta-satir gorun" style="--d:.16s">
-          <a class="btn btn-birincil" href="bilet.html">Biletini al
-            <svg class="ikon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-          <a class="btn btn-ikincil" href="#etkinlik">Geceyi keşfet</a>
-        </div>
-        <div class="olgular gorun" style="--d:.24s">
-          <div class="olgu"><small>Tarih</small><strong>22 Eylül 2026, Salı</strong></div>
-          <div class="olgu"><small>Mekân</small><strong>Terapi Cafe, Kırıkkale</strong></div>
-          <div class="olgu"><small>Kapılar</small><strong>19:00 · Sahne 19:30</strong></div>
-        </div>
-        <p class="geri-sayim gorun" id="geri-sayim" style="--d:.3s" aria-live="polite"></p>
+        <h2 class="dev rv">Sen de yerini ayırt.</h2>
+        <p class="etiket rv" style="--d:.1s">Sorular, iş birlikleri ve kulis için Instagram'dan yaz; en hızlı oradan dönüyoruz. Biletini de tek tıkla alabilirsin.</p>
+        <a class="cta cta-buyuk rv" style="--d:.15s" href="bilet.html">
+          <span class="cta-etiket">Biletini al</span>
+          <span class="cta-ikon" aria-hidden="true"><svg class="ikon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
       </div>
-      <div class="hero-gorsel gorun" style="--d:.12s">
-        <img src="assets/img/vibe-logo-1400.webp" width="1400" height="1400" alt="Vibe Event logosu: mor-turuncu zemin üzerinde psikedelik göz ve krom VIBE harfleri" fetchpriority="high">
-      </div>
-    </div>
-  </section>
-
-  <section class="bolum bolum-alt" id="etkinlik">
-    <div class="kap etkinlik-ic">
-      <div class="poster">
-        <picture>
-          <source srcset="assets/img/dj-tina-open-your-eyes.webp" type="image/webp">
-          <img src="assets/img/dj-tina-open-your-eyes.jpg" width="1080" height="787" alt="DJ TINA – Open Your Eyes etkinlik afişi: 22 Eylül 2026, Terapi Cafe, Kırıkkale" loading="lazy">
-        </picture>
-      </div>
-      <div class="detaylar">
-        <h2>DJ TINA&nbsp;· Open Your Eyes</h2>
-        <p>Elektronik müziğin enerjisi DJ TINA'nın performansıyla 22 Eylül'de Terapi Cafe sahnesinde. Kapılar 19:00'da açılıyor, set 19:30'da başlıyor ve gece 22:30'a kadar sürüyor. Etkinlik tamamen alkolsüz; alanda yeme-içme stantları var.</p>
-        <dl>
-          <dt>Tarih</dt><dd>22 Eylül 2026, Salı</dd>
-          <dt>Saat</dt><dd>Kapı 19:00 · Sahne 19:30–22:30</dd>
-          <dt>Mekân</dt><dd>Terapi Cafe, Kırıkkale</dd>
-          <dt>Giriş</dt><dd>QR kodlu bilet; kimlik veya öğrenci kimliği kontrolü yapılabilir</dd>
-          <dt>Format</dt><dd>Alkolsüz etkinlik</dd>
-        </dl>
-        <div class="cta-satir">
-          <a class="btn btn-birincil" href="bilet.html">Biletini al</a>
-          <a class="baglanti" href="#kurallar">Etkinlik kuralları
-            <svg class="ikon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="bolum blok-mor" id="biletler">
-    <div class="kap biletler-ic">
-      <div class="bolum-bas">
-        <h2>Erken dönem biletler</h2>
-        <p>Fiyat bilet sayısına göre değişiyor; arkadaşlarınla geldikçe kişi başı düşüyor. Ödeme IBAN ile yapılıyor, dekontunu yüklüyorsun, onaylanınca QR kodlu biletin e-postana geliyor.</p>
-        <p class="fiyat-not">Üçlü kampanyada kişi başı <strong>333₺</strong>, en avantajlı seçenek.</p>
-        <div class="cta-satir">
-          <a class="btn btn-birincil" href="bilet.html">Bilet al</a>
-        </div>
-      </div>
-      <div class="fiyat-panel" role="list">
-        <div class="fiyat" role="listitem">
-          <h3>Tek Tabanca</h3>
-          <div class="tutar">380₺</div>
-          <div class="kisi">1 kişi · kişi başı 380₺</div>
-        </div>
-        <div class="fiyat" role="listitem">
-          <h3>Ayrılmaz İkili</h3>
-          <div class="tutar">700₺</div>
-          <div class="kisi">2 kişi · kişi başı 350₺</div>
-        </div>
-        <div class="fiyat one" role="listitem">
-          <h3>Üçlü Kampanya</h3>
-          <div class="tutar">1.000₺</div>
-          <div class="kisi">3 kişi · kişi başı 333₺</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="bolum" id="nasil">
-    <div class="kap nasil-ic">
-      <div class="bolum-bas">
-        <h2>Bilet nasıl alınır?</h2>
-        <p>Beş adım, iki dakika. Formu doldur, ücreti gönder, dekontunu yükle; gerisini biz hallediyoruz.</p>
-        <div class="cta-satir">
-          <a class="btn btn-ikincil" href="bilet.html">Bilet sayfasına git</a>
-        </div>
-      </div>
-      <ol class="adimlar">
-        <li class="adim"><span class="no" aria-hidden="true">1</span><div><h3>Bilet sayfasını aç</h3><p>Kaç kişi geleceğini seç, ad-soyad, e-posta ve telefon bilgilerini gir. Biletin bu e-postaya gelecek.</p></div></li>
-        <li class="adim"><span class="no" aria-hidden="true">2</span><div><h3>Ücreti IBAN'a gönder</h3><p>Bilet sayfasındaki IBAN'a seçtiğin biletin ücretini havale ya da EFT ile gönder.</p></div></li>
-        <li class="adim"><span class="no" aria-hidden="true">3</span><div><h3>Açıklamaya ad-soyad ve telefon yaz</h3><p>Ödeme açıklamasına adını, soyadını ve telefon numaranı yaz ki seni bulabilelim.</p></div></li>
-        <li class="adim"><span class="no" aria-hidden="true">4</span><div><h3>Dekontunu yükle</h3><p>Dekontun görselini ya da PDF'ini forma yükle ve gönder. Onay için ödeme kontrolü yapılıyor.</p></div></li>
-        <li class="adim"><span class="no" aria-hidden="true">5</span><div><h3>Biletin e-postana gelsin</h3><p>Onaylanınca QR kodlu dijital biletin e-posta adresine gönderilir. QR kodunu etkinlik gününe kadar sakla, kimseyle paylaşma.</p></div></li>
-      </ol>
-    </div>
-  </section>
-
-  <section class="bolum bolum-alt" id="hakkinda">
-    <div class="kap hakkinda-ic">
-      <div class="bolum-bas">
-        <h2>Vibe Event kimdir?</h2>
-        <p>Vibe Event, Kırıkkale'de gençlerin müzik etrafında güvenle buluşabileceği, enerjisi yüksek ve alkolsüz geceler kurmak için yola çıkan bir etkinlik oluşumu. İşin merkezinde sahne, ses ve dans pisti var; gerisini birlikte kuruyoruz.</p>
-        <p>Open Your Eyes, Vibe Event'in etkinlik serisi. Serinin 22 Eylül durağında sahne DJ TINA'nın. Duyurular, kulis ve sorular için Instagram'da <a class="baglanti" href="https://www.instagram.com/vibe.eventt/" target="_blank" rel="noopener">@vibe.eventt</a> hesabındayız.</p>
-      </div>
-      <div class="goz">
-        <img src="assets/img/vibe-logo-1400.webp" width="1400" height="1400" alt="Vibe Event logosundaki psikedelik göz" loading="lazy">
-      </div>
-    </div>
-  </section>
-
-  <section class="bolum" id="kurallar">
-    <div class="kap kurallar-ic">
-      <div class="bolum-bas">
-        <h2>Etkinlik kuralları</h2>
-        <p>Herkesin iyi bir gece geçirmesi için birkaç net kural. Bilet alırken bunları okuduğunu onaylıyorsun.</p>
-        <div class="cta-satir">
-          <a class="btn btn-ikincil" href="bilet.html">Kabul ediyorum, bilet al</a>
-        </div>
-      </div>
-      <div class="kurallar">
-        <article class="kural">
-          <h3>Giriş ve kontrol</h3>
-          <p>Yoğunluk yaşamamak ve program başlangıcını kaçırmamak için kapı açılış saatinde alanda olmanı öneririz. Girişte kimlik veya öğrenci kimliği kontrolü yapılabilir; kimliğini yanında bulundur.</p>
-        </article>
-        <article class="kural">
-          <h3>Aman Ali Rıza Bey, ağzımızın tadı kaçmasın</h3>
-          <p>Diğer katılımcıların güvenliğini veya huzurunu tehdit eden, taşkınlık, fiziksel ya da sözlü taciz veya alana zarar verici eylemlerde bulunanlar organizasyon ve güvenlik inisiyatifiyle derhal alandan uzaklaştırılır. Bu gerekçeyle çıkarılanların bileti iptal edilir; bilet bedeli iade edilmez.</p>
-        </article>
-        <article class="kural">
-          <h3>Kişisel eşyalar</h3>
-          <p>Alandaki eşyalarının sorumluluğu sana ait. Güvenlik gerekçesiyle kesici, yanıcı, sivri nesneler ve açık paket sigara alana alınmaz.</p>
-        </article>
-        <article class="kural">
-          <h3>Alkol detoksu</h3>
-          <p>Etkinlik tamamen alkolsüz. Alanda alkol satışı yok; dışarıdan alkollü içecek sokulması kesinlikle yasak.</p>
-        </article>
-        <article class="kural">
-          <h3>Yiyecek ve içecek</h3>
-          <p>Mekân kuralı gereği alanda yeme-içme stantları var; dışarıdan yiyecek ve içecek alınmıyor.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="bolum bolum-alt" id="sss">
-    <div class="kap">
-      <div class="bolum-bas">
-        <h2>Biletin nasıl gelecek?</h2>
-        <p>En çok sorulanlar bir arada. Cevabını bulamazsan Instagram'dan yaz.</p>
-      </div>
-      <div class="sss">
-        <details>
-          <summary>Biletim ne zaman gelir?<svg class="ikon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
-          <p>Bilgilerini doldurup ödemeni yaptıktan ve dekontunu yükledikten sonra ödemen kontrol edilir. Onaylandığında biletin otomatik olarak e-posta adresine gönderilir.</p>
-        </details>
-        <details>
-          <summary>Bilet e-postası gelmedi, ne yapmalıyım?<svg class="ikon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
-          <p>Önce spam ya da gereksiz klasörünü kontrol et. Hâlâ yoksa Instagram'dan @vibe.eventt hesabına yaz; birlikte bakalım.</p>
-        </details>
-        <details>
-          <summary>Girişte ne göstereceğim?<svg class="ikon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
-          <p>Biletindeki QR kod ile etkinlik alanına giriş yaparsın. Kimlik kontrolü yapılabileceği için kimliğini ya da öğrenci kimliğini yanında bulundur.</p>
-        </details>
-        <details>
-          <summary>Arkadaşlarım için de bilet alabilir miyim?<svg class="ikon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
-          <p>Evet. İkili ve üçlü seçeneklerde formda açılan ek ad-soyad alanlarına arkadaşlarının adlarını yaz; biletler aynı e-postaya gelir.</p>
-        </details>
-      </div>
-    </div>
-  </section>
-
-  <section class="bolum blok-turuncu" id="iletisim">
-    <div class="kap iletisim-ic">
-      <div>
-        <h2>Sen de yerini ayırt.</h2>
-        <p>Sorular, iş birlikleri ve kulis için Instagram'dan yaz; en hızlı oradan dönüyoruz. Biletini de tek tıkla alabilirsin.</p>
-        <div class="cta-satir">
-          <a class="btn btn-koyu" href="bilet.html">Biletini al
-            <svg class="ikon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-        </div>
-      </div>
-      <div class="ig-liste">
+      <div class="ig-liste rv" style="--d:.2s">
         <a class="ig" href="https://www.instagram.com/vibe.eventt/" target="_blank" rel="noopener">
+          <span>@vibe.eventt <small>· Vibe Event resmi hesabı</small></span>
           <svg class="ikon" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.3"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
-          <div>@vibe.eventt<span>Vibe Event resmi hesabı</span></div>
         </a>
         <a class="ig" href="https://www.instagram.com/tugceshtx/" target="_blank" rel="noopener">
+          <span>@tugceshtx <small>· Organizasyon ekibi</small></span>
           <svg class="ikon" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.3"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
-          <div>@tugceshtx<span>Organizasyon ekibi</span></div>
         </a>
       </div>
     </div>
@@ -270,19 +221,15 @@
 </main>
 
 <footer class="altbilgi">
-  <div class="kap-genis altbilgi-ic">
-    <a class="marka" href="index.html" aria-label="Vibe Event ana sayfa">
-      <img src="assets/img/vibe-logo-160.webp" width="40" height="40" alt="Vibe Event" loading="lazy">
-    </a>
+  <div class="altbilgi-ic">
+    <p>© <span class="yil">2026</span> Vibe Event · Kırıkkale · Open Your Eyes</p>
     <nav aria-label="Altbilgi menüsü">
       <a href="#etkinlik">Etkinlik</a>
       <a href="#biletler">Biletler</a>
-      <a href="#nasil">Nasıl alınır</a>
-      <a href="#kurallar">Kurallar</a>
-      <a href="#sss">SSS</a>
-      <a href="bilet.html">Bilet al</a>
+      <a href="bilet.html#nasil">Nasıl alınır</a>
+      <a href="bilet.html#kurallar">Kurallar</a>
+      <a href="bilet.html#sss">SSS</a>
     </nav>
-    <p class="telif">© <span class="yil">2026</span> Vibe Event · Kırıkkale. Open Your Eyes, Vibe Event'in etkinlik serisidir.</p>
     <!-- Algow imza -->
     <div class="algow-credit-wrap">
       <a class="algow-credit" href="https://algow.net" target="_blank" rel="noopener" aria-label="Algow tarafından tasarlandı ve geliştirildi">
@@ -293,6 +240,8 @@
   </div>
 </footer>
 
+<script src="assets/js/lenis.min.js" defer></script>
+<script src="assets/js/hero-shader.js" defer></script>
 <script src="assets/js/site.js" defer></script>
 </body>
 </html>
