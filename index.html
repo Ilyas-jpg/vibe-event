@@ -9,6 +9,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
 <link rel="icon" type="image/png" sizes="512x512" href="assets/img/favicon-512.png">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="tr_TR">
 <meta property="og:site_name" content="Vibe Event">
@@ -47,14 +48,14 @@
 <body class="kilit">
 
 <div class="yukleme" id="yukleme" aria-hidden="true">
-  <img class="yukleme-goz" src="assets/brand/vibe-logo-goz-512.png" width="512" height="294" alt="">
+  <picture><source srcset="assets/brand/vibe-logo-goz-256.webp" type="image/webp"><img class="yukleme-goz" src="assets/brand/vibe-logo-goz-256.png" width="256" height="147" alt="" decoding="async"></picture>
   <div class="yukleme-sayac"><span id="sayac">00</span></div>
   <div class="yukleme-not">Vibe Event · Kırıkkale</div>
 </div>
 
 <header class="ust" id="ust">
   <a class="marka" href="index.html" aria-label="Vibe Event ana sayfa">
-    <img src="assets/brand/vibe-logo-lockup-800.png" width="800" height="690" alt="Vibe Event">
+    <picture><source srcset="assets/brand/vibe-logo-lockup-240.webp 1x, assets/brand/vibe-logo-lockup-480.webp 2x" type="image/webp"><img src="assets/brand/vibe-logo-lockup-240.png" width="240" height="207" alt="Vibe Event"></picture>
   </a>
   <p class="ust-orta">Kırıkkale'de alkolsüz<br>elektronik müzik geceleri</p>
   <div class="ust-sag">
@@ -77,7 +78,7 @@
   <section class="hero" id="hero">
     <div class="hero-sabit">
       <canvas id="hero-canvas" aria-hidden="true"></canvas>
-      <img class="hero-yedek" src="assets/img/hero-fallback.jpg" alt="" aria-hidden="true">
+      <img class="hero-yedek" src="assets/img/hero-fallback.jpg" srcset="assets/img/hero-fallback-720.webp 720w, assets/img/hero-fallback.webp 1400w" sizes="100vw" alt="" aria-hidden="true" loading="lazy">
       <div class="hero-ic">
         <p class="hero-not">Open Your Eyes serisi<br>22 Eylül 2026 · Kırıkkale</p>
         <div class="madalyon" aria-hidden="true">
@@ -86,7 +87,7 @@
               <path id="halkaDis1" d="M160,160 m-140,0 a140,140 0 1,1 280,0 a140,140 0 1,1 -280,0"/>
               <path id="halkaIc1" d="M160,160 m-108,0 a108,108 0 1,1 216,0 a108,108 0 1,1 -216,0"/>
             </defs>
-            <image href="assets/brand/vibe-logo-goz-512.png" x="76" y="112" width="168" height="97"/>
+            <image href="assets/brand/vibe-logo-goz-256.png" x="76" y="112" width="168" height="97"/>
             <g class="halka halka-dis"><text><textPath href="#halkaDis1" textLength="879" lengthAdjust="spacing">Vibe Event • Open Your Eyes • Vibe Event • Open Your Eyes • </textPath></text></g>
             <g class="halka halka-ic"><text><textPath href="#halkaIc1" textLength="678" lengthAdjust="spacing">22 Eylül 2026 • Terapi Cafe • Kırıkkale • 22 Eylül • </textPath></text></g>
           </svg>
@@ -103,7 +104,7 @@
             <span class="satir" style="--d:.15s"><span>gözlerin</span></span>
           </h1>
           <div class="hero-son">
-            <img src="assets/brand/vibe-logo-goz-512.png" width="512" height="294" alt="">
+            <img src="assets/brand/vibe-logo-goz-256.png" width="256" height="147" alt="">
             <span class="cizgi" aria-hidden="true"></span>
             <span class="satir hero-baslik" style="--d:.28s"><span>açılsın.</span></span>
           </div>
@@ -122,7 +123,7 @@
       <div class="etkinlik-grid">
         <div class="afis rv" id="afis" style="--d:.15s">
           <picture>
-            <source srcset="assets/img/dj-tina-open-your-eyes.webp" type="image/webp">
+            <source srcset="assets/img/dj-tina-open-your-eyes-720.webp 720w, assets/img/dj-tina-open-your-eyes.webp 1080w" sizes="(max-width:1024px) 100vw, 56vw" type="image/webp">
             <img src="assets/img/dj-tina-open-your-eyes.jpg" width="1080" height="787" alt="DJ TINA – Open Your Eyes etkinlik afişi: 22 Eylül 2026, Terapi Cafe, Kırıkkale" loading="lazy">
           </picture>
         </div>
@@ -229,6 +230,7 @@
       <a href="bilet.html#nasil">Nasıl alınır</a>
       <a href="bilet.html#kurallar">Kurallar</a>
       <a href="bilet.html#sss">SSS</a>
+      <a href="kvkk.html">KVKK</a>
     </nav>
     <!-- Algow imza -->
     <div class="algow-credit-wrap">

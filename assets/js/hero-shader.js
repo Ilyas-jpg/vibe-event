@@ -1,26 +1,54 @@
-/* Vibe Event — hero-shader.js
-   Tam ekran likit-krom / yanardöner şerit sahnesi. WebGL2 (GLSL ES 3.00) tercih, WebGL1 + OES_standard_derivatives yedek.
-   Dışa açık API: window.VIBE_HERO = { ready: Promise, setScroll(0..1), setPaused(bool) }
-   Tek geçişli fragment shader: düşük frekanslı anizotropik fBm alan → eş-yükselti şeritleri → levha normali → fresnel + spekülar + marka renk rampası. */
+/* Vibe Event — hero-shader.js (v3: cihaz kademeleri)
+   Tam ekran likit-krom sahnesi. WebGL2 (GLSL ES 3.00) tercih, WebGL1 + OES_standard_derivatives yedek.
+   Kademeler: yuksek (masaüstü) · orta (telefon) · dusuk (zayıf cihaz: düşük iç çözünürlük + 2 oktav + 24 fps + yumuşatma filtresi)
+              · statik (çok eski cihaz / hareket azaltma / ölçümde takılma: tek kare, döngü yok).
+   Başlangıç kademesi donanım ipuçlarından seçilir (bellek, çekirdek, GPU adı, veri tasarrufu); ilk 60 karede
+   kare aralığı ölçülür, hedefin çok üstündeyse bir kademe düşülür — hiçbir cihazda kasma/donma hedefi.
+   Dışa açık API: window.VIBE_HERO = { ready, setScroll(0..1), setPaused(bool), seviye, ayarla(seviye) } */
 (function () {
   'use strict';
 
   var canvas = document.getElementById('hero-canvas');
-  var api = { ready: null, setScroll: function () {}, setPaused: function () {} };
+  var api = { ready: null, setScroll: function () {}, setPaused: function () {}, seviye: 'yok', ayarla: function () {} };
   window.VIBE_HERO = api;
   if (!canvas) { api.ready = Promise.resolve(false); return; }
+  var kok = document.documentElement;
 
   var azalt = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var mobil = window.matchMedia && window.matchMedia('(max-width: 800px), (pointer: coarse)').matches;
+  var DPR = window.devicePixelRatio || 1;
 
   var gl = canvas.getContext('webgl2', { antialias: false, alpha: false, depth: false, stencil: false, powerPreference: 'high-performance' });
   var v2 = !!gl;
   if (!gl) gl = canvas.getContext('webgl', { antialias: false, alpha: false, depth: false, stencil: false, powerPreference: 'high-performance' });
-  if (!gl) { document.documentElement.classList.add('webgl-yok'); api.ready = Promise.resolve(false); return; }
-  if (!v2 && !gl.getExtension('OES_standard_derivatives')) { document.documentElement.classList.add('webgl-yok'); api.ready = Promise.resolve(false); return; }
+  if (!gl || (!v2 && !gl.getExtension('OES_standard_derivatives'))) { kok.classList.add('webgl-yok'); kok.setAttribute('data-hero', 'yok'); api.ready = Promise.resolve(false); return; }
 
+  /* ---------- Kademe seçimi ---------- */
+  var KADEME = {
+    yuksek: { olcek: Math.min(DPR, 1.25) * 0.85, oktav: 4, fps: 60 },
+    orta:   { olcek: Math.min(DPR, 1.5) * 0.55, oktav: 3, fps: 30 },
+    dusuk:  { olcek: 0.42, oktav: 2, fps: 24 },
+    statik: { olcek: 0.5, oktav: 3, fps: 0 }
+  };
+  var SIRA = ['yuksek', 'orta', 'dusuk', 'statik'];
+  function ipucuKademe() {
+    var puan = 0;
+    var bellek = navigator.deviceMemory, cekirdek = navigator.hardwareConcurrency;
+    if (bellek) { if (bellek <= 2) puan += 2; else if (bellek <= 4) puan += 1; }
+    if (cekirdek) { if (cekirdek <= 2) puan += 2; else if (cekirdek <= 4) puan += 1; }
+    if (navigator.connection && navigator.connection.saveData) puan += 1;
+    var gpu = '';
+    try { var dbg = gl.getExtension('WEBGL_debug_renderer_info'); if (dbg) gpu = String(gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) || ''); } catch (e) {}
+    if (/SwiftShader|llvmpipe|Software|Mali-4|Mali-T[678]\d\d|Mali-G5[12]|Adreno \(TM\) [345]\d\d|PowerVR|Vivante|VideoCore/i.test(gpu)) puan += 2;
+    if (mobil && puan >= 4) return 'dusuk';
+    if (mobil) return puan >= 2 ? 'dusuk' : 'orta';
+    return puan >= 4 ? 'dusuk' : puan >= 2 ? 'orta' : 'yuksek';
+  }
+  var zorla = canvas.getAttribute('data-seviye') || (function () { try { return new URLSearchParams(location.search).get('hero'); } catch (e) { return null; } })();
+  var seviye = azalt ? 'statik' : (KADEME[zorla] ? zorla : ipucuKademe());
+
+  /* ---------- Shader ---------- */
   var ORTAK = [
-    'precision highp float;',
     'uniform vec2 u_res;',
     'uniform float u_time;',
     'uniform vec2 u_mouse;',
@@ -34,7 +62,6 @@
     'float fbm(vec2 p){ float v = 0.0; float a = 0.5; mat2 m = mat2(1.62, 1.18, -1.18, 1.62);',
     '  for (int i = 0; i < 6; i++) { if (float(i) >= u_oct) break; v += a * noise(p); p = m * p + 0.37; a *= 0.5; } return v; }',
     'vec2 rot(vec2 p, float a){ float c = cos(a), s = sin(a); return mat2(c, -s, s, c) * p; }',
-    // marka rampası: mor ağırlıklı, magenta, kısa turuncu vurgu, geri mora (döngüsel)
     'vec3 rampa(float t){ t = fract(t);',
     '  vec3 c0 = vec3(0.227, 0.047, 0.640);',
     '  vec3 c1 = vec3(0.475, 0.000, 1.000);',
@@ -97,10 +124,11 @@
   ].join('\n');
 
   var VS2 = '#version 300 es\nin vec2 a; void main(){ gl_Position = vec4(a, 0.0, 1.0); }';
-  var FS2 = '#version 300 es\n' + ORTAK + '\nout vec4 o; void main(){ o = sahne(gl_FragCoord.xy); }';
+  var FS2 = '#version 300 es\nprecision highp float;\n' + ORTAK + '\nout vec4 o; void main(){ o = sahne(gl_FragCoord.xy); }';
   var VS1 = 'attribute vec2 a; void main(){ gl_Position = vec4(a, 0.0, 1.0); }';
-  var FS1 = '#extension GL_OES_standard_derivatives : enable\n' + ORTAK + '\nvoid main(){ gl_FragColor = sahne(gl_FragCoord.xy); }';
+  var FS1 = '#extension GL_OES_standard_derivatives : enable\n#ifdef GL_FRAGMENT_PRECISION_HIGH\nprecision highp float;\n#else\nprecision mediump float;\n#endif\n' + ORTAK + '\nvoid main(){ gl_FragColor = sahne(gl_FragCoord.xy); }';
 
+  function basarisiz() { kok.classList.add('webgl-yok'); kok.setAttribute('data-hero', 'yok'); api.ready = Promise.resolve(false); }
   function derle(tip, src) {
     var sh = gl.createShader(tip); gl.shaderSource(sh, src); gl.compileShader(sh);
     if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) { console.error('VIBE shader: ' + gl.getShaderInfoLog(sh)); return null; }
@@ -108,62 +136,98 @@
   }
   var vs = derle(gl.VERTEX_SHADER, v2 ? VS2 : VS1);
   var fs = derle(gl.FRAGMENT_SHADER, v2 ? FS2 : FS1);
-  if (!vs || !fs) { document.documentElement.classList.add('webgl-yok'); api.ready = Promise.resolve(false); return; }
+  if (!vs || !fs) { basarisiz(); return; }
   var prog = gl.createProgram(); gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
-  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { console.error('VIBE shader link: ' + gl.getProgramInfoLog(prog)); document.documentElement.classList.add('webgl-yok'); api.ready = Promise.resolve(false); return; }
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { console.error('VIBE shader link: ' + gl.getProgramInfoLog(prog)); basarisiz(); return; }
   gl.useProgram(prog);
-
   var buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
   var aLoc = gl.getAttribLocation(prog, 'a'); gl.enableVertexAttribArray(aLoc); gl.vertexAttribPointer(aLoc, 2, gl.FLOAT, false, 0, 0);
-  var U = {};
-  ['u_res', 'u_time', 'u_mouse', 'u_scroll', 'u_oct', 'u_seed'].forEach(function (n) { U[n] = gl.getUniformLocation(prog, n); });
+  var U = {}; ['u_res', 'u_time', 'u_mouse', 'u_scroll', 'u_oct', 'u_seed'].forEach(function (n) { U[n] = gl.getUniformLocation(prog, n); });
 
-  var olcek = parseFloat(canvas.getAttribute('data-olcek')) || (Math.min(window.devicePixelRatio || 1, mobil ? 1.0 : 1.25) * (mobil ? 0.7 : 0.85));
-  var oktav = parseFloat(canvas.getAttribute('data-oktav')) || (mobil ? 3.0 : 4.0);
-  var W = 0, H = 0;
+  /* ---------- Durum ---------- */
+  var olcek = 1, oktav = 4, fps = 60, W = 0, H = 0;
+  var zorlaOlcek = parseFloat(canvas.getAttribute('data-olcek')), zorlaOktav = parseFloat(canvas.getAttribute('data-oktav'));
+  function kademeUygula(ad) {
+    var k = KADEME[ad] || KADEME.orta;
+    seviye = ad; api.seviye = ad;
+    olcek = zorlaOlcek || k.olcek; oktav = zorlaOktav || k.oktav; fps = k.fps;
+    kok.setAttribute('data-hero', ad);
+    W = 0; H = 0; boyutla();
+  }
   function boyutla() {
     var w = Math.max(1, Math.floor(canvas.clientWidth * olcek));
     var h = Math.max(1, Math.floor(canvas.clientHeight * olcek));
     if (w === W && h === H) return;
     W = w; H = h; canvas.width = w; canvas.height = h; gl.viewport(0, 0, w, h);
   }
-
   var hedefFare = [0, 0], fare = [0, 0], scroll = 0, durdu = false, gorunur = true, gizli = false;
-  var t0 = performance.now(), ilkKare = false, cozReady;
+  var t0 = performance.now(), ilkKare = false, cozReady, sonKare = 0, planli = false;
+  var seed = parseFloat(canvas.getAttribute('data-seed')) || 3.7;
+  var sabitT = parseFloat(canvas.getAttribute('data-t'));
   api.ready = new Promise(function (r) { cozReady = r; });
-  api.setScroll = function (p) { scroll = p; };
+  api.setScroll = function (p) { scroll = p; if (seviye === 'statik') return; planla(); };
   api.setPaused = function (b) { durdu = !!b; if (!durdu) planla(); };
+  api.ayarla = function (ad) { if (KADEME[ad]) { kademeUygula(ad); olcumSifirla(); planla(); } };
 
-  window.addEventListener('pointermove', function (e) {
-    hedefFare = [(e.clientX / window.innerWidth) * 2 - 1, -((e.clientY / window.innerHeight) * 2 - 1)];
-  }, { passive: true });
-  window.addEventListener('resize', function () { boyutla(); planla(); }, { passive: true });
+  if (!mobil) {
+    window.addEventListener('pointermove', function (e) {
+      hedefFare = [(e.clientX / window.innerWidth) * 2 - 1, -((e.clientY / window.innerHeight) * 2 - 1)];
+    }, { passive: true });
+  }
+  window.addEventListener('resize', function () { W = 0; boyutla(); planla(); }, { passive: true });
   document.addEventListener('visibilitychange', function () { gizli = document.hidden; if (!gizli) planla(); });
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (es) { gorunur = es[0].isIntersecting; if (gorunur) planla(); }, { threshold: 0 }).observe(canvas);
   }
 
-  var seed = parseFloat(canvas.getAttribute('data-seed')) || 3.7;
-  var planli = false;
-  function ciz() {
+  /* ---------- Uyarlanır ölçüm: kare aralığı hedefin çok üstündeyse kademe düş ---------- */
+  var olcumN = 0, olcumTop = 0, olcumBasla = 0, olcumBitti = false, olcumOnce = 0;
+  function olcumSifirla() { olcumN = 0; olcumTop = 0; olcumBasla = 0; olcumBitti = false; olcumOnce = 0; }
+  function olc(now) {
+    if (olcumBitti || seviye === 'statik' || gizli) return;
+    if (!olcumOnce) { olcumOnce = now; return; }
+    var dt = now - olcumOnce; olcumOnce = now;
+    if (olcumBasla < 12) { olcumBasla++; return; }        // ısınma kareleri sayılmaz
+    if (dt > 250) return;                                 // sekme geçişi vb. sıçramalar sayılmaz
+    olcumN++; olcumTop += dt;
+    if (olcumN >= 48) {
+      olcumBitti = true;
+      var ort = olcumTop / olcumN, hedef = 1000 / fps;
+      if (ort > hedef * 1.55) {
+        var i = SIRA.indexOf(seviye);
+        var yeni = SIRA[Math.min(SIRA.length - 1, i + 1)];
+        kademeUygula(yeni);
+        if (yeni !== 'statik') olcumSifirla();
+      }
+    }
+  }
+
+  function ciz(now) {
     planli = false;
+    if (fps > 0) {
+      var aralik = 1000 / fps;
+      if (now - sonKare < aralik - 1.5) { planla(); return; }   // kare sınırı
+      sonKare = now;
+    }
     boyutla();
     fare[0] += (hedefFare[0] - fare[0]) * 0.05;
     fare[1] += (hedefFare[1] - fare[1]) * 0.05;
-    var sabitT = parseFloat(canvas.getAttribute('data-t'));
-    var t = isNaN(sabitT) ? (performance.now() - t0) / 1000 : sabitT;
+    var t = isNaN(sabitT) ? (now - t0) / 1000 : sabitT;
     gl.uniform2f(U.u_res, W, H);
-    gl.uniform1f(U.u_time, azalt ? 0.0 : t);
+    gl.uniform1f(U.u_time, seviye === 'statik' ? 2.0 : t);
     gl.uniform2f(U.u_mouse, fare[0], fare[1]);
     gl.uniform1f(U.u_scroll, scroll);
     gl.uniform1f(U.u_oct, oktav);
     gl.uniform1f(U.u_seed, seed);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
     if (!ilkKare) { ilkKare = true; cozReady(true); }
-    if (azalt) return;
+    if (seviye === 'statik' || fps === 0) return;            // tek kare
+    olc(now);
     if (!durdu && gorunur && !gizli) planla();
   }
-  function planla() { if (planli || (azalt && ilkKare)) return; planli = true; requestAnimationFrame(ciz); }
+  function planla() { if (planli) return; if ((seviye === 'statik' || fps === 0) && ilkKare) return; planli = true; requestAnimationFrame(ciz); }
+
+  kademeUygula(seviye);
   planla();
 })();

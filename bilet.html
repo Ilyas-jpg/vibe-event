@@ -9,6 +9,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
 <link rel="icon" type="image/png" sizes="512x512" href="assets/img/favicon-512.png">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="tr_TR">
 <meta property="og:site_name" content="Vibe Event">
@@ -23,14 +24,14 @@
 <body class="kilit">
 
 <div class="yukleme" id="yukleme" aria-hidden="true">
-  <img class="yukleme-goz" src="assets/brand/vibe-logo-goz-512.png" width="512" height="294" alt="">
+  <picture><source srcset="assets/brand/vibe-logo-goz-256.webp" type="image/webp"><img class="yukleme-goz" src="assets/brand/vibe-logo-goz-256.png" width="256" height="147" alt="" decoding="async"></picture>
   <div class="yukleme-sayac"><span id="sayac">00</span></div>
   <div class="yukleme-not">Bilet · Vibe Event</div>
 </div>
 
 <header class="ust dolu" id="ust">
   <a class="marka" href="index.html" aria-label="Vibe Event ana sayfa">
-    <img src="assets/brand/vibe-logo-lockup-800.png" width="800" height="690" alt="Vibe Event">
+    <picture><source srcset="assets/brand/vibe-logo-lockup-240.webp 1x, assets/brand/vibe-logo-lockup-480.webp 2x" type="image/webp"><img src="assets/brand/vibe-logo-lockup-240.png" width="240" height="207" alt="Vibe Event"></picture>
   </a>
   <p class="ust-orta">DJ TINA · Open Your Eyes<br>22 Eylül 2026 · Kırıkkale</p>
   <div class="ust-sag">
@@ -160,6 +161,11 @@
       </section>
 
       <section class="form-panel" aria-label="Onay ve gönder">
+        <div class="gizli" aria-hidden="true"><label for="websiteAlani">Web sitesi</label><input type="text" id="websiteAlani" name="website" tabindex="-1" autocomplete="off"></div>
+        <label class="onay" for="kvkkCheck">
+          <input type="checkbox" id="kvkkCheck" required>
+          <span><a class="baglanti" href="kvkk.html" target="_blank" rel="noopener">Aydınlatma metnini</a> okudum; bilgilerimin bilet işlemleri için işlenmesine ve yurt dışı sunuculara aktarılmasına açık rıza veriyorum.</span>
+        </label>
         <label class="onay" for="rulesCheck">
           <input type="checkbox" id="rulesCheck" required>
           <span><a class="baglanti" href="#kurallar">Etkinlik kurallarını</a> okudum ve kabul ediyorum.</span>
@@ -177,7 +183,7 @@
     <aside class="yan">
       <div class="yan-panel">
         <div class="ozet">
-          <img src="assets/img/dj-tina-open-your-eyes.webp" width="88" height="64" alt="">
+          <img src="assets/img/dj-tina-open-your-eyes-720.webp" width="88" height="64" alt="" loading="lazy">
           <div>
             <strong>DJ TINA · Open Your Eyes</strong>
             <span>22 Eylül 2026, Salı · Kapı 19:00</span>
@@ -288,12 +294,12 @@
 
 <div class="ortu" id="successScreen" role="dialog" aria-modal="true" aria-labelledby="basariBaslik">
   <div class="ortu-kutu">
-    <img src="assets/brand/vibe-logo-lockup-800.png" width="800" height="690" alt="Vibe Event">
+    <img src="assets/brand/vibe-logo-lockup-240.png" width="240" height="207" alt="Vibe Event">
     <h2 id="basariBaslik">Aramıza hoş geldin</h2>
     <p>DJ TINA · Open Your Eyes · 22 Eylül 2026, Kırıkkale</p>
-    <p class="etiket" style="color:var(--metin-3)">Bilet numaran</p>
+    <p class="etiket" id="basariEtiket" style="color:var(--metin-3)">Bilet numaran</p>
     <div class="bilet-no" id="successTicketId">-</div>
-    <p>Biletin ve QR kodun e-posta adresine gönderildi. Gelmediyse spam klasörünü kontrol et. Dans pistinde görüşürüz.</p>
+    <p id="basariNot">Biletin ve QR kodun e-posta adresine gönderildi. Gelmediyse spam klasörünü kontrol et. Dans pistinde görüşürüz.</p>
     <a class="cta" href="index.html"><span class="cta-etiket">Ana sayfaya dön</span><span class="cta-ikon" aria-hidden="true"><svg class="ikon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
   </div>
 </div>
@@ -310,6 +316,7 @@
       <a href="#nasil">Nasıl alınır</a>
       <a href="#kurallar">Kurallar</a>
       <a href="#sss">SSS</a>
+      <a href="kvkk.html">KVKK</a>
     </nav>
     <!-- Algow imza -->
     <div class="algow-credit-wrap">

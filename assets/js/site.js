@@ -119,17 +119,24 @@
   /* ---------- Marquee ---------- */
   var mq = document.getElementById('marquee');
   if (mq && !azalt) {
-    var x = 0, yarim = 0, sonT = performance.now();
+    var x = 0, yarim = 0, sonT = performance.now(), mqGorunur = false, mqPlanli = false;
     function olc() { yarim = mq.scrollWidth / 2; }
     olc(); window.addEventListener('resize', olc, { passive: true });
-    (function dongu(t) {
+    function dongu(t) {
+      mqPlanli = false;
+      if (!mqGorunur || document.hidden) { sonT = t; return; }
       var dt = Math.min(64, t - sonT); sonT = t;
       var hiz = 0.55 + Math.min(4, Math.abs(sonHiz) * 0.06);
       x -= hiz * dt / 16;
       if (yarim > 0 && -x >= yarim) x += yarim;
       mq.style.transform = 'translate3d(' + x.toFixed(2) + 'px,0,0)';
-      requestAnimationFrame(dongu);
-    })(sonT);
+      mqPlanla();
+    }
+    function mqPlanla() { if (mqPlanli) return; mqPlanli = true; requestAnimationFrame(dongu); }
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) { mqGorunur = es[0].isIntersecting; if (mqGorunur) { sonT = performance.now(); mqPlanla(); } }, { threshold: 0 }).observe(mq);
+    } else { mqGorunur = true; mqPlanla(); }
+    document.addEventListener('visibilitychange', function () { if (!document.hidden && mqGorunur) { sonT = performance.now(); mqPlanla(); } });
   }
 
   /* ---------- Reveal (bir kez) ---------- */

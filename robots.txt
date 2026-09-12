@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /sosyal/
+Sitemap: https://ilyas-jpg.github.io/vibe-event/sitemap.xml

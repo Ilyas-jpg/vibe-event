@@ -1,0 +1,15 @@
+{
+  "name": "Vibe Event",
+  "short_name": "Vibe Event",
+  "description": "Kırıkkale'de alkolsüz elektronik müzik geceleri. Open Your Eyes serisi.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#040207",
+  "theme_color": "#040207",
+  "lang": "tr",
+  "icons": [
+    { "src": "assets/img/favicon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/img/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}
