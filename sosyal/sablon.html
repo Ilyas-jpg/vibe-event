@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Vibe Event — Instagram şablonu</title>
+<style>
+@font-face{font-family:"Panchang";src:url("../assets/fonts/panchang-500-tr.woff2") format("woff2");font-weight:500}
+@font-face{font-family:"Panchang";src:url("../assets/fonts/panchang-700-tr.woff2") format("woff2");font-weight:700}
+@font-face{font-family:"Panchang";src:url("../assets/fonts/panchang-800-tr.woff2") format("woff2");font-weight:800}
+@font-face{font-family:"JetBrains Mono";src:url("../assets/fonts/jetbrains-mono-tr.woff2") format("woff2");font-weight:300 800}
+:root{--bg:#040207;--turuncu:#FF7A1F;--display:"Panchang",sans-serif;--mono:"JetBrains Mono",monospace;--pad:64px;--golge:0 2px 4px rgba(4,2,7,.55),0 10px 40px rgba(4,2,7,.5)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#111;color:#fff}
+.kare{position:relative;width:1080px;height:1350px;overflow:hidden;background:var(--bg);font-family:var(--mono)}
+.kare.story{height:1920px}
+#hero-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,2,7,.42) 0%,rgba(4,2,7,0) 24%,rgba(4,2,7,0) 44%,rgba(4,2,7,.72) 100%)}
+.kare.koyu .scrim{background:linear-gradient(180deg,rgba(4,2,7,.42) 0%,rgba(4,2,7,.05) 22%,rgba(4,2,7,.55) 46%,rgba(4,2,7,.86) 100%)}
+.etiket{font:500 21px/1.5 var(--mono);text-transform:uppercase;letter-spacing:.08em;text-shadow:var(--golge)}
+.etiket .soluk{color:rgba(255,255,255,.62)}
+.etiket .el{text-transform:none;letter-spacing:.04em}
+.alt-ic .etiket{white-space:nowrap}
+.ust{position:absolute;top:var(--pad);left:var(--pad);right:var(--pad);display:flex;justify-content:space-between;align-items:flex-start}
+.ust img{height:120px;width:auto;filter:drop-shadow(0 6px 24px rgba(4,2,7,.5))}
+.ust .sag{text-align:right}
+.ust .sag span{display:block}
+.madalyon{position:absolute;right:var(--pad);top:176px;width:330px;height:330px}
+.kare.story .madalyon{left:50%;top:520px;transform:translateX(-50%);width:540px;height:540px}
+.kare.story .ust{top:250px}
+.kare.story .alt{bottom:230px}
+.madalyon svg{width:100%;height:100%;overflow:visible}
+.madalyon text{font-family:var(--mono);font-weight:500;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;fill:#fff}
+.madalyon .ic text{fill:rgba(255,255,255,.62)}
+.icerik{position:absolute;left:var(--pad);right:var(--pad);bottom:205px}
+.kare.story .icerik{bottom:420px}
+.baslik{font:700 118px/.9 var(--display);text-transform:uppercase;letter-spacing:-.015em;text-shadow:var(--golge)}
+.baslik span{display:block}
+.baslik .sag{text-align:right}
+.kare.story .baslik{font-size:118px}
+.hud{display:grid;grid-template-columns:1fr 1fr;gap:26px 32px;margin-top:44px;max-width:900px}
+.hud div{font:500 24px/1.45 var(--mono);text-transform:uppercase;letter-spacing:.06em;text-shadow:var(--golge)}
+.hud span{display:block;color:rgba(255,255,255,.6)}
+.alt{position:absolute;left:var(--pad);right:var(--pad);bottom:var(--pad)}
+.alt .cizgi{display:block;height:1px;background:rgba(255,255,255,.4);margin-bottom:28px}
+.alt-ic{display:flex;justify-content:space-between;align-items:center;gap:24px}
+.pill{display:inline-flex;align-items:center;gap:10px;border:1.5px solid #fff;border-radius:8px;padding:0 30px;height:64px;font:700 26px/1 var(--display);text-transform:uppercase;letter-spacing:.02em;white-space:nowrap;text-shadow:none;background:rgba(4,2,7,.28)}
+.pill i{font-style:normal;color:var(--turuncu)}
+/* DJ */
+.foto{position:absolute;right:var(--pad);top:230px;width:520px;height:640px;border-radius:12px;overflow:hidden;box-shadow:0 40px 90px rgba(4,2,7,.6)}
+.foto img{width:100%;height:100%;object-fit:cover;display:block}
+.dev{font:800 236px/.85 var(--display);text-transform:uppercase;letter-spacing:-.03em;text-shadow:var(--golge)}
+.dev-alt{font:500 62px/1 var(--display);text-transform:uppercase;letter-spacing:.01em;margin-top:22px;text-shadow:var(--golge);color:rgba(255,255,255,.9)}
+/* Bilet satırları */
+.fiyatlar{margin-top:44px}
+.fiyat{display:grid;grid-template-columns:1fr auto;gap:6px 24px;align-items:center;padding:20px 0;border-top:1px solid rgba(255,255,255,.35)}
+.fiyat:last-child{border-bottom:1px solid rgba(255,255,255,.35)}
+.fiyat .ad{font:700 36px/1 var(--display);text-transform:uppercase;letter-spacing:-.02em;text-shadow:var(--golge)}
+.fiyat .meta{grid-column:1;font:500 22px/1.4 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.72);text-shadow:var(--golge)}
+.fiyat .tutar{grid-column:2;grid-row:1/3;font:800 84px/1 var(--display);letter-spacing:-.02em;text-shadow:var(--golge)}
+/* Adımlar */
+.adimlar{list-style:none;margin-top:44px;display:grid;gap:22px}
+.adimlar li{display:grid;grid-template-columns:80px 1fr;gap:16px;align-items:baseline;font:500 30px/1.4 var(--mono);text-shadow:var(--golge)}
+.adimlar li b{font:800 40px/1 var(--display);color:var(--turuncu)}
+/* İfade */
+.ifade .baslik{font-size:104px;font-weight:800;letter-spacing:-.03em}
+.satirlar{margin-top:44px;display:grid;gap:18px}
+.satirlar div{display:flex;gap:18px;align-items:baseline;font:500 28px/1.45 var(--mono);text-shadow:var(--golge)}
+.satirlar div::before{content:"";width:14px;height:14px;border-radius:50%;background:var(--turuncu);flex:none;transform:translateY(-2px)}
+</style>
+</head>
+<body>
+<div class="kare" id="kare">
+  <canvas id="hero-canvas" data-olcek="2" data-oktav="4" data-seed="3.7" data-t="6"></canvas>
+  <div class="scrim"></div>
+  <header class="ust">
+    <img src="../assets/brand/vibe-logo-lockup-800.png" alt="Vibe Event">
+    <div class="etiket sag"><span id="sayfa"></span><span class="soluk">Vibe Event · Kırıkkale</span></div>
+  </header>
+  <div class="madalyon" id="madalyon">
+    <svg viewBox="0 0 320 320">
+      <defs>
+        <path id="hd" d="M160,160 m-140,0 a140,140 0 1,1 280,0 a140,140 0 1,1 -280,0"/>
+        <path id="hi" d="M160,160 m-108,0 a108,108 0 1,1 216,0 a108,108 0 1,1 -216,0"/>
+      </defs>
+      <image href="../assets/brand/vibe-logo-goz-512.png" x="76" y="112" width="168" height="97"/>
+      <g class="dis" style="transform-origin:50% 50%;transform-box:fill-box;transform:rotate(-14deg)"><text><textPath href="#hd" textLength="879" lengthAdjust="spacing">Vibe Event • Open Your Eyes • Vibe Event • Open Your Eyes • </textPath></text></g>
+      <g class="ic" style="transform-origin:50% 50%;transform-box:fill-box;transform:rotate(22deg)"><text><textPath href="#hi" textLength="678" lengthAdjust="spacing">22 Eylül 2026 • Terapi Cafe • Kırıkkale • 22 Eylül • </textPath></text></g>
+    </svg>
+  </div>
+  <div class="foto" id="foto" hidden><img id="fotoImg" alt=""></div>
+  <main class="icerik" id="icerik"></main>
+  <footer class="alt">
+    <span class="cizgi"></span>
+    <div class="alt-ic">
+      <span class="pill" id="cta"></span>
+      <span class="etiket"><span class="soluk"><span class="el">@vibe.eventt</span> · 22.09.2026</span></span>
+    </div>
+  </footer>
+</div>
+<script>
+  (function () {
+    var key = new URLSearchParams(location.search).get('post') || '01-duyuru';
+    window.__POST_KEY = key;
+    var c = document.getElementById('hero-canvas');
+    var seedler = { '01-duyuru': 3.7, '02-djtina': 5.1, '03-biletler': 7.9, '04-nasil': 2.3, '05-alkolsuz': 9.4, 'story-01-duyuru': 3.7, 'story-02-biletler': 7.9 };
+    c.setAttribute('data-seed', seedler[key] || 3.7);
+    if (key.indexOf('story') === 0) document.getElementById('kare').classList.add('story');
+  })();
+</script>
+<script src="../assets/js/hero-shader.js"></script>
+<script src="postlar.js"></script>
+<script>
+  (function () {
+    var key = window.__POST_KEY, p = window.POSTLAR[key];
+    var kare = document.getElementById('kare'), icerik = document.getElementById('icerik');
+    var h = function (tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
+    document.getElementById('sayfa').textContent = p.sayfa || (p.tip === 'story' ? 'Story' : '');
+    document.getElementById('cta').innerHTML = p.cta.replace('·', '<i>•</i>');
+    var hud = function () { if (!p.hud) return; var g = h('div', 'hud'); p.hud.forEach(function (x) { g.appendChild(h('div', '', '<span>' + x[0] + '</span>' + x[1])); }); icerik.appendChild(g); };
+    if (p.duzen === 'duyuru') {
+      var b = h('h1', 'baslik'); p.baslik.forEach(function (s, i) { b.appendChild(h('span', i === p.baslik.length - 1 ? 'sag' : '', s)); }); icerik.appendChild(b); hud();
+    } else if (p.duzen === 'dj') {
+      document.getElementById('madalyon').hidden = true;
+      var f = document.getElementById('foto'); f.hidden = false; document.getElementById('fotoImg').src = p.foto;
+      icerik.appendChild(h('h1', 'dev', p.dev)); icerik.appendChild(h('div', 'dev-alt', p.alt)); hud();
+    } else if (p.duzen === 'bilet') {
+      kare.classList.add('koyu');
+      document.getElementById('madalyon').hidden = p.tip !== 'story'; if (p.tip === 'story') document.getElementById('madalyon').style.top = '300px';
+      var b2 = h('h1', 'baslik'); p.baslik.forEach(function (s) { b2.appendChild(h('span', '', s)); }); b2.style.fontSize = p.tip === 'story' ? '120px' : '96px'; icerik.appendChild(b2);
+      var l = h('div', 'fiyatlar'); p.satirlar.forEach(function (r) { l.appendChild(h('div', 'fiyat', '<span class="ad">' + r[0] + '</span><span class="tutar">' + r[2] + '</span><span class="meta">' + r[1] + '</span>')); }); icerik.appendChild(l);
+    } else if (p.duzen === 'adimlar') {
+      kare.classList.add('koyu');
+      var b3 = h('h1', 'baslik'); p.baslik.forEach(function (s) { b3.appendChild(h('span', '', s)); }); b3.style.fontSize = '96px'; icerik.appendChild(b3);
+      var ol = h('ol', 'adimlar'); p.adimlar.forEach(function (s, i) { ol.appendChild(h('li', '', '<b>0' + (i + 1) + '</b><span>' + s + '</span>')); }); icerik.appendChild(ol);
+    } else if (p.duzen === 'ifade') {
+      kare.classList.add('koyu'); icerik.classList.add('ifade');
+      var b4 = h('h1', 'baslik'); p.baslik.forEach(function (s) { b4.appendChild(h('span', '', s)); }); icerik.appendChild(b4);
+      var sl = h('div', 'satirlar'); p.satirlar.forEach(function (s) { sl.appendChild(h('div', '', s)); }); icerik.appendChild(sl);
+    }
+    var hazirla = function () { if (window.VIBE_HERO) window.VIBE_HERO.setScroll(p.scroll || 0); setTimeout(function () { window.__hazir = true; }, 400); };
+    var fontlar = document.fonts ? document.fonts.ready : Promise.resolve();
+    Promise.all([window.VIBE_HERO ? window.VIBE_HERO.ready : Promise.resolve(), fontlar]).then(hazirla);
+  })();
+</script>
+</body>
+</html>

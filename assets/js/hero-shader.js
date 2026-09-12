@@ -119,8 +119,8 @@
   var U = {};
   ['u_res', 'u_time', 'u_mouse', 'u_scroll', 'u_oct', 'u_seed'].forEach(function (n) { U[n] = gl.getUniformLocation(prog, n); });
 
-  var olcek = Math.min(window.devicePixelRatio || 1, mobil ? 1.0 : 1.25) * (mobil ? 0.7 : 0.85);
-  var oktav = mobil ? 3.0 : 4.0;
+  var olcek = parseFloat(canvas.getAttribute('data-olcek')) || (Math.min(window.devicePixelRatio || 1, mobil ? 1.0 : 1.25) * (mobil ? 0.7 : 0.85));
+  var oktav = parseFloat(canvas.getAttribute('data-oktav')) || (mobil ? 3.0 : 4.0);
   var W = 0, H = 0;
   function boyutla() {
     var w = Math.max(1, Math.floor(canvas.clientWidth * olcek));
@@ -144,14 +144,15 @@
     new IntersectionObserver(function (es) { gorunur = es[0].isIntersecting; if (gorunur) planla(); }, { threshold: 0 }).observe(canvas);
   }
 
-  var seed = 3.7;
+  var seed = parseFloat(canvas.getAttribute('data-seed')) || 3.7;
   var planli = false;
   function ciz() {
     planli = false;
     boyutla();
     fare[0] += (hedefFare[0] - fare[0]) * 0.05;
     fare[1] += (hedefFare[1] - fare[1]) * 0.05;
-    var t = (performance.now() - t0) / 1000;
+    var sabitT = parseFloat(canvas.getAttribute('data-t'));
+    var t = isNaN(sabitT) ? (performance.now() - t0) / 1000 : sabitT;
     gl.uniform2f(U.u_res, W, H);
     gl.uniform1f(U.u_time, azalt ? 0.0 : t);
     gl.uniform2f(U.u_mouse, fare[0], fare[1]);
