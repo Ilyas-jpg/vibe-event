@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bilet al · DJ TINA – Open Your Eyes · Vibe Event</title>
+<meta name="description" content="DJ TINA – Open Your Eyes (22 Eylül 2026, Terapi Cafe, Kırıkkale) için biletini al. Bilet sayısını seç, ücreti IBAN'a gönder, dekontunu yükle; QR kodlu biletin e-postana gelsin.">
+<meta name="robots" content="index,follow">
+<meta name="theme-color" content="#0B0713">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="assets/img/favicon-512.png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:site_name" content="Vibe Event">
+<meta property="og:title" content="Bilet al · DJ TINA – Open Your Eyes · 22 Eylül 2026, Kırıkkale">
+<meta property="og:description" content="Bilet sayısını seç, ücreti gönder, dekontunu yükle. QR kodlu biletin e-postana gelsin.">
+<meta property="og:image" content="https://ilyas-jpg.github.io/vibe-event/assets/img/og-dj-tina.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="assets/fonts/syne-tr.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/manrope-tr.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+
+<header class="ust">
+  <div class="kap-genis ust-ic">
+    <a class="marka" href="index.html" aria-label="Vibe Event ana sayfa">
+      <img src="assets/img/vibe-logo-160.webp" width="44" height="44" alt="Vibe Event">
+    </a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menüyü aç">
+      <svg class="ikon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <nav class="nav" id="nav" aria-label="Site menüsü">
+      <a href="index.html#etkinlik">Etkinlik</a>
+      <a href="index.html#biletler">Biletler</a>
+      <a href="index.html#nasil">Nasıl alınır</a>
+      <a href="index.html#kurallar">Kurallar</a>
+      <a href="index.html#iletisim">İletişim</a>
+    </nav>
+  </div>
+</header>
+
+<main id="anaSayfa">
+
+  <section class="bilet-hero">
+    <div class="kap">
+      <h1 class="gorun">Biletini al, yerini ayırt.</h1>
+      <p class="giris gorun" style="--d:.08s">DJ TINA · Open Your Eyes · 22 Eylül 2026, Terapi Cafe, Kırıkkale. Seçimini yap, ücreti gönder, dekontunu yükle. Ödemen onaylanınca QR kodlu biletin e-postana gelir.</p>
+    </div>
+  </section>
+
+  <div class="kap bilet-ic">
+
+    <form id="mainTicketForm" novalidate>
+
+      <section class="form-panel gorun" style="--d:.12s" aria-labelledby="adim1">
+        <div class="panel-bas">
+          <span class="no" aria-hidden="true">1</span>
+          <div><h2 id="adim1">Bilet seçimi</h2><p>Kaç kişi geliyorsunuz?</p></div>
+        </div>
+        <div class="secenekler" role="radiogroup" aria-label="Bilet sayısı">
+          <label class="secenek">
+            <input type="radio" name="bilet" value="1" data-tutar="380" data-kisi="1" checked>
+            <div><strong>Tek Tabanca</strong><span>1 kişi</span></div>
+            <div class="tutar">380₺</div>
+          </label>
+          <label class="secenek">
+            <input type="radio" name="bilet" value="2" data-tutar="700" data-kisi="2">
+            <div><strong>Ayrılmaz İkili</strong><span>2 kişi · kişi başı 350₺</span></div>
+            <div class="tutar">700₺</div>
+          </label>
+          <label class="secenek">
+            <input type="radio" name="bilet" value="3" data-tutar="1000" data-kisi="3">
+            <div><strong>Üçlü Kampanya</strong><span>3 kişi · kişi başı 333₺</span></div>
+            <div class="tutar">1.000₺</div>
+          </label>
+        </div>
+      </section>
+
+      <section class="form-panel" aria-labelledby="adim2">
+        <div class="panel-bas">
+          <span class="no" aria-hidden="true">2</span>
+          <div><h2 id="adim2">Kişisel bilgiler</h2><p>Biletler bu e-postaya gönderilecek.</p></div>
+        </div>
+        <div class="alan">
+          <label for="adSoyad">Ad Soyad</label>
+          <input type="text" id="adSoyad" name="adSoyad" autocomplete="name" required placeholder="Adın ve soyadın">
+        </div>
+        <div class="alan" id="alanAd2" hidden>
+          <label for="adSoyad2">2. kişinin adı soyadı</label>
+          <input type="text" id="adSoyad2" name="adSoyad2" placeholder="Arkadaşının adı ve soyadı">
+        </div>
+        <div class="alan" id="alanAd3" hidden>
+          <label for="adSoyad3">3. kişinin adı soyadı</label>
+          <input type="text" id="adSoyad3" name="adSoyad3" placeholder="Arkadaşının adı ve soyadı">
+        </div>
+        <div class="alan-grid">
+          <div class="alan">
+            <label for="email">E-posta</label>
+            <input type="email" id="email" name="email" autocomplete="email" inputmode="email" required placeholder="ornek@eposta.com">
+            <span class="yardim">QR kodlu bilet buraya gelecek.</span>
+          </div>
+          <div class="alan">
+            <label for="telefon">Telefon</label>
+            <input type="tel" id="telefon" name="telefon" autocomplete="tel" inputmode="tel" required placeholder="05xx xxx xx xx">
+            <span class="yardim">Ödeme açıklamasına da aynı numarayı yaz.</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="form-panel" aria-labelledby="adim3">
+        <div class="panel-bas">
+          <span class="no" aria-hidden="true">3</span>
+          <div><h2 id="adim3">Ödeme</h2><p>Havale ya da EFT ile aşağıdaki hesaba gönder.</p></div>
+        </div>
+        <div class="tutar-satir">
+          <span>Gönderilecek tutar</span>
+          <output id="tutar" for="mainTicketForm">380₺</output>
+        </div>
+        <div class="iban">
+          <span class="etiket">IBAN</span>
+          <code id="ibanMetin">TR02 0001 2009 4570 0001 1277 39</code>
+          <div class="iban-alt">
+            <div><span class="etiket">Hesap sahibi</span><br><strong>Turgut Çağatay Ünal</strong></div>
+            <button class="btn btn-ikincil btn-kucuk" type="button" id="ibanKopyala" data-iban="TR020001200945700001127739">
+              <svg class="ikon" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+              IBAN'ı kopyala
+            </button>
+          </div>
+        </div>
+        <p class="yardim" style="color:var(--metin-2)">Açıklama kısmına ad-soyad ve telefon numaranı yazmayı unutma; ödemeni böyle eşleştiriyoruz.</p>
+      </section>
+
+      <section class="form-panel" aria-labelledby="adim4">
+        <div class="panel-bas">
+          <span class="no" aria-hidden="true">4</span>
+          <div><h2 id="adim4">Dekont yükle</h2><p>Ödeme dekontunun görseli ya da PDF'i.</p></div>
+        </div>
+        <label class="dekont" id="dekontAlani" for="fileInput">
+          <svg class="ikon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m0 0 4 4m-4-4-4 4M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>
+          <strong>Dekontunu buraya sürükle ya da seç</strong>
+          <span>PDF, JPG veya PNG · en fazla 10 MB</span>
+          <span class="dosya-adi" id="selectedFileName"></span>
+        </label>
+        <input type="file" id="fileInput" class="gizli" accept="application/pdf,image/*,.pdf,.jpg,.jpeg,.png">
+      </section>
+
+      <section class="form-panel" aria-label="Onay ve gönder">
+        <label class="onay" for="rulesCheck">
+          <input type="checkbox" id="rulesCheck" required>
+          <span><a class="baglanti" href="index.html#kurallar" target="_blank" rel="noopener">Etkinlik kurallarını</a> okudum ve kabul ediyorum.</span>
+        </label>
+        <div class="hata" id="errorBox" role="alert"></div>
+        <button class="btn btn-birincil gonder" type="submit" id="submitButton">Biletimi al</button>
+        <p class="yardim" style="text-align:center">Gönderdikten sonra bu sayfayı kapatma; onay birkaç saniye sürebilir.</p>
+      </section>
+
+    </form>
+
+    <aside class="yan">
+      <div class="yan-panel">
+        <div class="ozet">
+          <img src="assets/img/dj-tina-open-your-eyes.webp" width="88" height="64" alt="">
+          <div>
+            <strong>DJ TINA · Open Your Eyes</strong>
+            <span>22 Eylül 2026, Salı · Kapı 19:00</span>
+            <span>Terapi Cafe, Kırıkkale · Alkolsüz</span>
+          </div>
+        </div>
+      </div>
+      <div class="yan-panel">
+        <h2>Biletin nasıl gelecek?</h2>
+        <ol class="mini-adimlar">
+          <li>Bilgilerini doldurup ödemeni yap, dekontunu yükle.</li>
+          <li>Ödemen kontrol edilir; onaylanınca biletin otomatik olarak e-postana gönderilir.</li>
+          <li>Biletindeki QR kod ile etkinlik alanına giriş yaparsın.</li>
+          <li>Bileti mailinde bulamazsan spam klasörünü kontrol et; hâlâ yoksa Instagram'dan yaz.</li>
+        </ol>
+      </div>
+      <div class="yan-panel">
+        <h2>Takılırsan</h2>
+        <p style="color:var(--metin-2)">Instagram'dan <a class="baglanti" href="https://www.instagram.com/vibe.eventt/" target="_blank" rel="noopener">@vibe.eventt</a> hesabına yaz, birlikte çözelim.</p>
+      </div>
+    </aside>
+
+  </div>
+</main>
+
+<div class="ortu" id="loadingOverlay" aria-live="assertive" aria-busy="true">
+  <div class="ortu-kutu">
+    <div class="donen" aria-hidden="true"></div>
+    <h2>Biletin hazırlanıyor</h2>
+    <p>Ödemen ve bilgilerin kontrol ediliyor. Lütfen bu ekranı kapatma.</p>
+  </div>
+</div>
+
+<div class="ortu" id="successScreen" role="dialog" aria-modal="true" aria-labelledby="basariBaslik">
+  <div class="ortu-kutu">
+    <img src="assets/img/vibe-logo-160.webp" width="88" height="88" alt="Vibe Event">
+    <h2 id="basariBaslik">Aramıza hoş geldin</h2>
+    <p>DJ TINA · Open Your Eyes · 22 Eylül 2026, Kırıkkale</p>
+    <p style="color:var(--metin-3);font-size:.9rem">Bilet numaran</p>
+    <div class="bilet-no" id="successTicketId">-</div>
+    <p>Biletin ve QR kodun e-posta adresine gönderildi. Gelmediyse spam klasörünü kontrol et. Dans pistinde görüşürüz.</p>
+    <a class="btn btn-birincil" href="index.html">Ana sayfaya dön</a>
+  </div>
+</div>
+
+<!-- Apps Script cevap iframe'i: bilet sistemi buraya yanıt verir, sayfa postMessage ile dinler -->
+<iframe name="appsScriptResponse" id="appsScriptResponse" title="Bilet sistemi yanıtı" tabindex="-1" aria-hidden="true"></iframe>
+
+<footer class="altbilgi">
+  <div class="kap-genis altbilgi-ic">
+    <a class="marka" href="index.html" aria-label="Vibe Event ana sayfa">
+      <img src="assets/img/vibe-logo-160.webp" width="40" height="40" alt="Vibe Event" loading="lazy">
+    </a>
+    <nav aria-label="Altbilgi menüsü">
+      <a href="index.html#etkinlik">Etkinlik</a>
+      <a href="index.html#biletler">Biletler</a>
+      <a href="index.html#nasil">Nasıl alınır</a>
+      <a href="index.html#kurallar">Kurallar</a>
+      <a href="index.html#sss">SSS</a>
+    </nav>
+    <p class="telif">© <span class="yil">2026</span> Vibe Event · Kırıkkale. Open Your Eyes, Vibe Event'in etkinlik serisidir.</p>
+    <!-- Algow imza -->
+    <div class="algow-credit-wrap">
+      <a class="algow-credit" href="https://algow.net" target="_blank" rel="noopener" aria-label="Algow tarafından tasarlandı ve geliştirildi">
+        <span>Tasarım &amp; Geliştirme</span>
+        <img src="assets/img/algow-wordmark.webp" alt="Algow" width="58" height="20" loading="lazy" decoding="async">
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/site.js" defer></script>
+<script src="assets/js/bilet.js" defer></script>
+</body>
+</html>
